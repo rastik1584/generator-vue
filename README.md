@@ -1,4 +1,4 @@
-# Generator Vue scaffolding
+# Generator Vue
 This package adding artisan commands to list folder structure and create vue file or vue crud in specific folder path. <br>
 
 ### Installation: 
