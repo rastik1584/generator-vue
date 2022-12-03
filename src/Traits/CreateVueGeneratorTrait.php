@@ -1,6 +1,6 @@
 <?php
 
-namespace rastik1584\GeneratorVueScaffolding\Traits;
+namespace rastik1584\GeneratorVue\Traits;
 
 use Illuminate\Support\Facades\File;
 
@@ -23,8 +23,8 @@ trait CreateVueGeneratorTrait
     private function checkFolderExistOrCreate()
     {
         // create if not exist
-        if($this->option('d')) {
-            ! is_dir($this->folderPathInCommand()) ? mkdir($this->folderPathInCommand(), 0755) : '';
+        if ($this->option('d')) {
+            !is_dir($this->folderPathInCommand()) ? mkdir($this->folderPathInCommand(), 0755) : '';
         }
 
         return is_dir($this->folderPathInCommand());
@@ -36,7 +36,7 @@ trait CreateVueGeneratorTrait
      */
     private function checkFileExistInFolder()
     {
-        return file_exists($this->folderPathInCommand()."/".$this->fileName());
+        return file_exists($this->folderPathInCommand() . "/" . $this->fileName());
     }
 
     /**
@@ -49,10 +49,10 @@ trait CreateVueGeneratorTrait
 
         $base_path_template = base_path($path);
 
-        if(file_exists($base_path_template)) {
-            if($file_name === "default.vue") $file_name = $this->fileName();
+        if (file_exists($base_path_template)) {
+            if ($file_name === "default.vue") $file_name = $this->fileName();
 
-            return File::copy($base_path_template, $this->folderPathInCommand()."/". $file_name);
+            return File::copy($base_path_template, $this->folderPathInCommand() . "/" . $file_name);
         }
 
         return false;
@@ -64,7 +64,7 @@ trait CreateVueGeneratorTrait
      */
     protected function folderPathInCommand(): string
     {
-        return base_path("$this->resource_path/".$this->argument('path'));
+        return base_path("$this->resource_path/" . $this->argument('path'));
     }
 
     /**
@@ -73,6 +73,6 @@ trait CreateVueGeneratorTrait
      */
     protected function fileName(string $name = ""): string
     {
-        return $this->argument('name').".vue";
+        return $this->argument('name') . ".vue";
     }
 }

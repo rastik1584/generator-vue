@@ -22,7 +22,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "GeneratorVueServiceProvider"
+                "rastik1584\\GeneratorVue\\GeneratorVueServiceProvider"
             ]
         }
     },

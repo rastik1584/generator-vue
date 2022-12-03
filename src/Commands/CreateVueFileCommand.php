@@ -4,7 +4,7 @@ namespace rastik1584\GeneratorVue\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use rastik1584\GeneratorVueScaffolding\Traits\CreateVueGeneratorTrait;
+use rastik1584\GeneratorVue\Traits\CreateVueGeneratorTrait;
 
 class CreateVueFileCommand extends Command
 {
@@ -34,14 +34,14 @@ class CreateVueFileCommand extends Command
      */
     public function handle()
     {
-        if($this->checkFolderExistOrCreate()) {
-            if($this->checkFileExistInFolder()) {
+        if ($this->checkFolderExistOrCreate()) {
+            if ($this->checkFileExistInFolder()) {
                 $this->error('File exists in folder !');
                 return false;
             }
 
-            if($this->option('crud')) {
-                collect( static::$crud_files )->each(function ($name) {
+            if ($this->option('crud')) {
+                collect(static::$crud_files)->each(function ($name) {
                     $this->createNewFile(file_name: $name);
                 });
                 $this->info("Crud files is created successfully");
@@ -58,9 +58,6 @@ class CreateVueFileCommand extends Command
         $this->error('Folder is not exist, add argument --d to create folder in structure');
         return false;
     }
-
-
-
 
 
 }

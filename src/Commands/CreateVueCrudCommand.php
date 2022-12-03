@@ -3,7 +3,7 @@
 namespace rastik1584\GeneratorVue\Commands;
 
 use Illuminate\Console\Command;
-use rastik1584\GeneratorVueScaffolding\Traits\CreateVueGeneratorTrait;
+use rastik1584\GeneratorVue\Traits\CreateVueGeneratorTrait;
 
 class CreateVueCrudCommand extends Command
 {
@@ -15,7 +15,7 @@ class CreateVueCrudCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'generator-vue-scaffolding:make-vue-crud {path}
+    protected $signature = 'generator-vue:make-vue-crud {path}
                                 {--d : Create new folder}';
 
     /**
@@ -37,14 +37,14 @@ class CreateVueCrudCommand extends Command
      */
     public function handle()
     {
-        if($this->checkFolderExistOrCreate()) {
+        if ($this->checkFolderExistOrCreate()) {
 
-            if($this->checkAllFilesExistsInFolder()) return false;
+            if ($this->checkAllFilesExistsInFolder()) return false;
 
             collect(static::$crud_files)->each(function ($name) {
                 $this->file_name = "$name";
 
-                if($this->checkFileExistInFolder()) {
+                if ($this->checkFileExistInFolder()) {
                     $this->skipped++;
                     $this->error("File $name exists in folder skipped from creating!");
                 } else {
@@ -66,7 +66,7 @@ class CreateVueCrudCommand extends Command
 
     private function checkFileExistInFolder()
     {
-        return file_exists($this->folderPathInCommand()."/".$this->file_name);
+        return file_exists($this->folderPathInCommand() . "/" . $this->file_name);
     }
 
     /**
@@ -76,10 +76,10 @@ class CreateVueCrudCommand extends Command
     private function checkAllFilesExistsInFolder()
     {
         $count = collect($this->files)->countBy(function ($name) {
-             return file_exists($this->folderPathInCommand()."/".$name);
+            return file_exists($this->folderPathInCommand() . "/" . $name);
         });
 
-        if($count->first() === count($this->files)) {
+        if ($count->first() === count($this->files)) {
             $this->error("All files in folder is exists !");
             return true;
         }

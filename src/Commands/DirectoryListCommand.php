@@ -5,15 +5,18 @@ namespace rastik1584\GeneratorVue\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
+use rastik1584\GeneratorVue\Traits\CreateVueGeneratorTrait;
 
 class DirectoryListCommand extends Command
 {
+    use CreateVueGeneratorTrait;
+
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'generator-vue-scaffolding:directory-list {--path}';
+    protected $signature = 'generator-vue:directory-list {--path}';
 
     /**
      * The console command description.
@@ -22,7 +25,6 @@ class DirectoryListCommand extends Command
      */
     protected $description = 'Return directories with resources/js';
 
-    private string $scan_dir = 'resources/js';
 
     /**
      * Execute the console command.
@@ -33,21 +35,21 @@ class DirectoryListCommand extends Command
     {
         $this->info('Folder structure :');
 
-        $this->getFolderList($this->scan_dir)->map(function ($dir) {
+        $this->getFolderList(static::$resource_path)->map(function ($dir) {
 
-             $this->option('path') ? $this->pathStyleDirectories(collect([$dir])) : $this->listStylePadding(1,$dir);
+            $this->option('path') ? $this->pathStyleDirectories(collect([$dir])) : $this->listStylePadding(1, $dir);
 
-             $this->getFolderList("$this->scan_dir/$dir")->map(function ($subdir) use ($dir) {
-                 $this->option('path') ? $this->pathStyleDirectories(collect([$dir, $subdir])) : $this->listStylePadding(2, $subdir);
+            $this->getFolderList(static::$resource_path . "/$dir")->map(function ($subdir) use ($dir) {
+                $this->option('path') ? $this->pathStyleDirectories(collect([$dir, $subdir])) : $this->listStylePadding(2, $subdir);
 
-                 $this->getFolderList("$this->scan_dir/$dir/$subdir")->map(function ($lvl_three_dir) use($dir, $subdir) {
-                     $this->option('path') ? $this->pathStyleDirectories(collect([$dir, $subdir, $lvl_three_dir])) : $this->listStylePadding(3, $lvl_three_dir);
+                $this->getFolderList(static::$resource_path . "/$dir/$subdir")->map(function ($lvl_three_dir) use ($dir, $subdir) {
+                    $this->option('path') ? $this->pathStyleDirectories(collect([$dir, $subdir, $lvl_three_dir])) : $this->listStylePadding(3, $lvl_three_dir);
 
-                     $this->getFolderList("$this->scan_dir/$dir/$subdir/$lvl_three_dir")->map(function ($lvl_four_dir) use($dir, $subdir, $lvl_three_dir) {
-                         $this->option('path') ? $this->pathStyleDirectories(collect([$dir, $subdir, $lvl_three_dir, $lvl_four_dir])) : $this->listStylePadding(4,$lvl_four_dir);;
-                     });
-                 });
-             });
+                    $this->getFolderList(static::$resource_path . "/$dir/$subdir/$lvl_three_dir")->map(function ($lvl_four_dir) use ($dir, $subdir, $lvl_three_dir) {
+                        $this->option('path') ? $this->pathStyleDirectories(collect([$dir, $subdir, $lvl_three_dir, $lvl_four_dir])) : $this->listStylePadding(4, $lvl_four_dir);;
+                    });
+                });
+            });
         });
 
     }
@@ -73,7 +75,7 @@ class DirectoryListCommand extends Command
      * @param string $string
      * @return void
      */
-    private function listStylePadding(int $level,string $string)
+    private function listStylePadding(int $level, string $string)
     {
         switch ($level) {
             case 1:
