@@ -1,0 +1,30 @@
+{
+    "name": "rastik1584/generator-vue",
+    "description": "Generate vue in laravel",
+    "type": "package",
+    "require": {
+        "php": "^8.0.2",
+        "laravel/framework": "9.*"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "rastik1584\\GeneratorVue\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rastislav Vozár",
+            "email": "rastik.vozar@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "GeneratorVueServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}
