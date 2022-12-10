@@ -48,11 +48,12 @@ class CreateVueFileCommand extends Command
                 return true;
             }
 
-            $this->createNewFile();
-
-            $this->info('File is created successfully');
-
-            return true;
+            if($this->createNewFile(file_name: $this->fileName())) {
+                $this->info('File is created successfully');
+                return true;
+            }
+            $this->error('Base file template not exist in path: '.static::$resource_path." ".$this->argument('path'));
+            return false;
         }
 
         $this->error('Folder is not exist, add argument --d to create folder in structure');
