@@ -75,11 +75,11 @@ class CreateVueCrudCommand extends Command
      */
     private function checkAllFilesExistsInFolder()
     {
-        $count = collect($this->files)->countBy(function ($name) {
+        $count = collect(static::$crud_files)->countBy(function ($name) {
             return file_exists($this->folderPathInCommand() . "/" . $name);
         });
 
-        if ($count->first() === count($this->files)) {
+        if ($count->has(1) && $count->get(1) === count(static::$crud_files)) {
             $this->error("All files in folder is exists !");
             return true;
         }
